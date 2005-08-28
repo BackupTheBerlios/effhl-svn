@@ -104,7 +104,10 @@ int pl_change_ep(pl_file* plfile, unsigned int entrypoint)
     
     IMAGE_DOS_HEADER* mz = (IMAGE_DOS_HEADER*)plfile->buffer;
     IMAGE_NT_HEADERS* pe = (IMAGE_NT_HEADERS*)((char*)mz +  mz->e_lfanew);
-    //if(&pe->OptionalHeader.AddressOfEntryPoint > pfile->size) { return PL_ERROR; }
+    if(&pe->OptionalHeader.AddressOfEntryPoint >(plfile->size + plfile->buffer)) 
+    { 
+      return PL_ERROR; 
+    }
     
     pe->OptionalHeader.AddressOfEntryPoint = entrypoint;
        
