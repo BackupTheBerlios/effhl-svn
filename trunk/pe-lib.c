@@ -29,15 +29,23 @@
  *
  *
  *=======================================================================*/
-int pl_open_file( pl_file* plFile, int mode)
+int pl_open_file( pl_file* plfile, int mode)
 {
     FILE* hFile;
     long filesize;
     char* pfile;
     
+    
+    
+    if(plfile == NULL) { return PL_ERROR; }
+    
+    plfile->handle = NULL;
+    plfile->buffer = NULL;
+    plfile->size = (int)NULL;
+    
     if(mode == PL_READ_ONLY)
     {
-            hFile = fopen(plFile->name,"rb");
+            hFile = fopen(plfile->name,"rb");
             if(hFile == NULL) { return PL_ERROR; }
 
             fseek(hFile,0,SEEK_END);
@@ -48,14 +56,14 @@ int pl_open_file( pl_file* plFile, int mode)
             if(pfile == NULL) { return PL_ERROR; }
             fread(pfile,1,filesize,hFile);
             
-            plFile->handle = hFile;
-            plFile->buffer = pfile;
-            plFile->size = filesize;
+            plfile->handle = hFile;
+            plfile->buffer = pfile;
+            plfile->size = filesize;
 
     }
     else if(mode == PL_READ_WRITE)
     {
-            hFile = fopen(plFile->name,"rb+"); 
+            hFile = fopen(plfile->name,"rb+"); 
             if(hFile == NULL) { return PL_ERROR; }
             
             fseek(hFile,0,SEEK_END);
@@ -67,9 +75,9 @@ int pl_open_file( pl_file* plFile, int mode)
 
             fread(pfile,1,filesize,hFile);
 
-            plFile->handle = hFile;            
-            plFile->buffer = pfile;
-            plFile->size = filesize;
+            plfile->handle = hFile;            
+            plfile->buffer = pfile;
+            plfile->size = filesize;
     }
     
     return PL_DONE;  
@@ -82,18 +90,22 @@ int pl_open_file( pl_file* plFile, int mode)
  *
  *=======================================================================*/
 
-void pl_close_file(pl_file* plFile)
+void pl_close_file(pl_file* plfile)
 {
-     free(plFile->buffer);
-     fclose(plFile->handle);
-     plFile->buffer = NULL;
-     plFile->handle = NULL;
+     free(plfile->buffer);
+     fclose(plfile->handle);
+     plfile->buffer = NULL;
+     plfile->handle = NULL;
 }
 
-int pl_change_ep(pl_file* pfile, unsigned int entrypoint)
+int pl_change_ep(pl_file* plfile, unsigned int entrypoint)
 {
-    IMAGE_DOS_HEADER* mz = (IMAGE_DOS_HEADER*)pfile->buffer;
+    if(plfile->buffer == NULL || plfile->handle == NULL ) { return PL_ERROR; }
+    
+    IMAGE_DOS_HEADER* mz = (IMAGE_DOS_HEADER*)plfile->buffer;
     IMAGE_NT_HEADERS* pe = (IMAGE_NT_HEADERS*)((char*)mz +  mz->e_lfanew);
+    //if(&pe->OptionalHeader.AddressOfEntryPoint > pfile->size) { return PL_ERROR; }
+    
     pe->OptionalHeader.AddressOfEntryPoint = entrypoint;
        
     //********* The True Power of C*************
