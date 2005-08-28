@@ -1,80 +1,82 @@
+#include <stdint.h>
+
 #define IMAGE_NUMBEROF_DIRECTORY_ENTRIES 16
 
 typedef struct _IMAGE_DOS_HEADER {
-	unsigned short int e_magic;
-	unsigned short int e_cblp;
-	unsigned short int e_cp;
-	unsigned short int e_crlc;
-	unsigned short int e_cparhdr;
-	unsigned short int e_minalloc;
-	unsigned short int e_maxalloc;
-	unsigned short int e_ss;
-	unsigned short int e_sp;
-	unsigned short int e_csum;
-	unsigned short int e_ip;
-	unsigned short int e_cs;
-	unsigned short int e_lfarlc;
-	unsigned short int e_ovno;
-	unsigned short int e_res[4];
-	unsigned short int e_oemid;
-	unsigned short int e_oeminfo;
-	unsigned short int e_res2[10];
-	unsigned int e_lfanew;
+	uint16_t e_magic;
+	uint16_t e_cblp;
+	uint16_t e_cp;
+	uint16_t e_crlc;
+	uint16_t e_cparhdr;
+	uint16_t e_minalloc;
+	uint16_t e_maxalloc;
+	uint16_t e_ss;
+	uint16_t e_sp;
+	uint16_t e_csum;
+	uint16_t e_ip;
+	uint16_t e_cs;
+	uint16_t e_lfarlc;
+	uint16_t e_ovno;
+	uint16_t e_res[4];
+	uint16_t e_oemid;
+	uint16_t e_oeminfo;
+	uint16_t e_res2[10];
+	uint32_t e_lfanew;
 } IMAGE_DOS_HEADER,*PIMAGE_DOS_HEADER;
 
 typedef struct _IMAGE_DATA_DIRECTORY {
-	unsigned int VirtualAddress;
-	unsigned int Size;
+	uint32_t VirtualAddress;
+	uint32_t Size;
 } IMAGE_DATA_DIRECTORY, *PIMAGE_DATA_DIRECTORY;
 
 typedef struct _IMAGE_FILE_HEADER {
-	unsigned short int Machine;
-	unsigned short int NumberOfSections;
-	unsigned int TimeDateStamp;
-	unsigned int PointerToSymbolTable;
-	unsigned int NumberOfSymbols;
-	unsigned short int SizeOfOptionalHeader;
-	unsigned short int Characteristics;
+	uint16_t Machine;
+	uint16_t NumberOfSections;
+	uint32_t TimeDateStamp;
+	uint32_t PointerToSymbolTable;
+	uint32_t NumberOfSymbols;
+	uint16_t SizeOfOptionalHeader;
+	uint16_t uint8_tacteristics;
 } IMAGE_FILE_HEADER, *PIMAGE_FILE_HEADER;
 
 typedef struct _IMAGE_OPTIONAL_HEADER {
-	unsigned short int Magic;
-	char MajorLinkerVersion;
-	char MinorLinkerVersion;
-	unsigned int SizeOfCode;
-	unsigned int SizeOfInitializedData;
-	unsigned int SizeOfUninitializedData;
-	unsigned int AddressOfEntryPoint;
-	unsigned int BaseOfCode;
-	unsigned int BaseOfData;
-	unsigned int ImageBase;
-	unsigned int SectionAlignment;
-	unsigned int FileAlignment;
-	unsigned short int MajorOperatingSystemVersion;
-	unsigned short int MinorOperatingSystemVersion;
-	unsigned short int MajorImageVersion;
-	unsigned short int MinorImageVersion;
-	unsigned short int MajorSubsystemVersion;
-	unsigned short int MinorSubsystemVersion;
-	unsigned int Reserved1;
-	unsigned int SizeOfImage;
-	unsigned int SizeOfHeaders;
-	unsigned int CheckSum;
-	unsigned short int Subsystem;
-	unsigned short int DllCharacteristics;
-	unsigned int SizeOfStackReserve;
-	unsigned int SizeOfStackCommit;
-	unsigned int SizeOfHeapReserve;
-	unsigned int SizeOfHeapCommit;
-	unsigned int LoaderFlags;
-	unsigned int NumberOfRvaAndSizes;
+	uint16_t Magic;
+	uint8_t MajorLinkerVersion;
+	uint8_t MinorLinkerVersion;
+	uint32_t SizeOfCode;
+	uint32_t SizeOfInitializedData;
+	uint32_t SizeOfUninitializedData;
+	uint32_t AddressOfEntryPoint;
+	uint32_t BaseOfCode;
+	uint32_t BaseOfData;
+	uint32_t ImageBase;
+	uint32_t SectionAlignment;
+	uint32_t FileAlignment;
+	uint16_t MajorOperatingSystemVersion;
+	uint16_t MinorOperatingSystemVersion;
+	uint16_t MajorImageVersion;
+	uint16_t MinorImageVersion;
+	uint16_t MajorSubsystemVersion;
+	uint16_t MinorSubsystemVersion;
+	uint32_t Reserved1;
+	uint32_t SizeOfImage;
+	uint32_t SizeOfHeaders;
+	uint32_t CheckSum;
+	uint16_t Subsystem;
+	uint16_t Dlluint8_tacteristics;
+	uint32_t SizeOfStackReserve;
+	uint32_t SizeOfStackCommit;
+	uint32_t SizeOfHeapReserve;
+	uint32_t SizeOfHeapCommit;
+	uint32_t LoaderFlags;
+	uint32_t NumberOfRvaAndSizes;
 	IMAGE_DATA_DIRECTORY DataDirectory[IMAGE_NUMBEROF_DIRECTORY_ENTRIES];
 } IMAGE_OPTIONAL_HEADER, *PIMAGE_OPTIONAL_HEADER;
 
 
 
 typedef struct _IMAGE_NT_HEADERS {
-	unsigned int Signature;
+	uint32_t Signature;
 	IMAGE_FILE_HEADER FileHeader;
 	IMAGE_OPTIONAL_HEADER OptionalHeader;
 } IMAGE_NT_HEADERS;

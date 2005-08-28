@@ -18,6 +18,7 @@
  
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 #include "pe.h"
 #include "pe-lib.h"
 
@@ -29,10 +30,10 @@
  *
  *
  *=======================================================================*/
-int pl_open_file( pl_file* plfile, int mode)
+uint32_t pl_open_file( pl_file* plfile, uint32_t mode)
 {
     FILE* hFile;
-    long filesize;
+    uint32_t filesize;
     char* pfile;
     
     
@@ -41,7 +42,7 @@ int pl_open_file( pl_file* plfile, int mode)
     
     plfile->handle = NULL;
     plfile->buffer = NULL;
-    plfile->size = (int)NULL;
+    plfile->size = (uint32_t)NULL;
     
     if(mode == PL_READ_ONLY)
     {
@@ -98,12 +99,12 @@ void pl_close_file(pl_file* plfile)
      plfile->handle = NULL;
 }
 
-int pl_change_ep(pl_file* plfile, unsigned int entrypoint)
+uint32_t pl_change_ep(pl_file* plfile, uint32_t entrypoint)
 {
     if(plfile->buffer == NULL || plfile->handle == NULL ) { return PL_ERROR; }
     
     IMAGE_DOS_HEADER* mz = (IMAGE_DOS_HEADER*)plfile->buffer;
-    IMAGE_NT_HEADERS* pe = (IMAGE_NT_HEADERS*)((char*)mz +  mz->e_lfanew);
+    IMAGE_NT_HEADERS* pe = (IMAGE_NT_HEADERS*)((uint8_t*)mz +  mz->e_lfanew);
     if(&pe->OptionalHeader.AddressOfEntryPoint >(plfile->size + plfile->buffer)) 
     { 
       return PL_ERROR; 

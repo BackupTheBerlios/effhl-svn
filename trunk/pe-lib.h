@@ -18,6 +18,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdint.h>
 
 #define PL_ERROR -1
 #define PL_DONE 0
@@ -27,11 +28,11 @@
 typedef struct file_struct
 {
        FILE* handle;
-       char name[300];
-       char* buffer;
-       unsigned int size;
+       uint8_t name[300];
+       uint8_t* buffer;
+       uint32_t size;
 } pl_file;
 
-int pl_open_file( pl_file* plfile, int mode);
+uint32_t pl_open_file( pl_file* plfile, uint32_t mode);
 void pl_close_file(pl_file* plFile);
-int pl_change_ep(pl_file* pfile, unsigned int entrypoint);
+uint32_t pl_change_ep(pl_file* pfile, uint32_t entrypoint);
