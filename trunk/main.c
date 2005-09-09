@@ -25,11 +25,14 @@
 int32_t main(int32_t argc, uint8_t *argv[])
 {
   pl_file test;
+  pl_importsinfo imp;
   
   strcpy((uint8_t*)&test.name,"test.exe");
-  pl_open_file(&test,PL_READ_WRITE);
-  pl_change_ep(&test,0x6969);
-  pl_close_file(&test);
+  plOpenFile(&test, PL_READ_WRITE);
+ 
+  plGetImportsInfo(&test, &imp);
+  
+  plCloseFile(&test);
   
   system("PAUSE");	
   return 0;
