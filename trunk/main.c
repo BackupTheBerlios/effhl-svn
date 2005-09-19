@@ -19,10 +19,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <stdint.h>
 #include "pe-lib.h"
+#include "config.h"
 
-int32_t main(int32_t argc, uint8_t *argv[])
+int main(int argc, char *argv[])
 {
   pl_file test;
   pl_importsinfo imp;

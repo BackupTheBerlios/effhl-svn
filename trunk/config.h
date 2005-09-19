@@ -18,12 +18,21 @@
  *  Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
  */
 
+/* With few modifications by Ivan Zlatev (pumqara@gmail.com) */
+
+/* ########################################
+ * PORTING CONFIG START
+ *########################################*/
+
+#define HAVE_STDINT_H
+
+/* ########################################
+ * PORTING CONFIG END
+ *########################################*/
+
+
 #ifndef __CLTYPES_H
 #define __CLTYPES_H
-
-#if HAVE_CONFIG_H
-#include "clamav-config.h"
-#endif
 
 #ifdef HAVE_STDINT_H
 #include <stdint.h>
@@ -64,3 +73,4 @@
 #endif
 
 #endif
+

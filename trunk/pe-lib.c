@@ -27,12 +27,10 @@
  
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdint.h>
 #include <string.h>
 #include "pe.h"
 #include "pe-lib.h"
-
-
+#include "config.h"
 
 /*=======================================================================
  *
@@ -619,6 +617,47 @@ uint32_t plMapOffsetToOffset(pl_file* plFile, uint32_t MapOffset)
 	}
 }
 
+
+/*=======================================================================
+ *
+ * Returns the section number, where the RVA is Located
+ * 0 Means Headers pre-section
+ *
+ *=======================================================================*/
+
+uint16_t plLocateRVA(pl_file* plFile, uint32_t RVA)
+{
+	pl_sectioninfo SectionInfo;
+	pl_peinfo PeInfo;
+	pl_pointers Ptrs;
+	uint16_t i;
+	
+       	if(plCheckPe(plFile) == PL_ERROR) { return PL_ERROR; }
+	
+		// RVA is before the first section?
+	plGetSectionInfo(plFile, &SectionInfo, 1);
+	if(RVA >=0 && RVA < SectionInfo.VirtualAddress)
+	{
+		return 0;
+	}
+	
+		
+	plGetPeInfo(plFile, &PeInfo, &Ptrs);
+	
+	for(i=1; i <= PeInfo.NumberOfSections; i++)
+	{
+		plGetSectionInfo(plFile, &SectionInfo, i);
+		
+		if(RVA >= SectionInfo.VirtualAddress && RVA < SectionInfo.VirtualAddress + SectionInfo.VirtualSize)
+		{
+			return i;
+		}
+	}
+	
+	return PL_NOTFOUND;
+}
+
+
 /*=======================================================================
  *
  *
@@ -699,7 +738,7 @@ uint32_t plAddSection(pl_file* plFile, uint8_t* Name, uint32_t RawSize, uint32_t
 		plGetSectionInfo(plFile, &prevSectionInfo, PeInfo.NumberOfSections);
 		
 		nsect->VirtualAddress = prevSectionInfo.VirtualAddress + prevSectionInfo.VirtualSize;
-			// align
+			// align virt.
 		if(nsect->VirtualAddress % PeInfo.SectionAlignment != 0)
 		{
 			nsect->VirtualAddress +=  PeInfo.SectionAlignment - 
@@ -707,7 +746,7 @@ uint32_t plAddSection(pl_file* plFile, uint8_t* Name, uint32_t RawSize, uint32_t
 		}
 		
 		nsect->PointerToRawData = prevSectionInfo.RawAddress + prevSectionInfo.RawSize;
-			// align
+			// align raw
 		if(nsect->PointerToRawData % PeInfo.FileAlignment != 0)
 		{
 			nsect->PointerToRawData += PeInfo.FileAlignment - 
@@ -939,7 +978,17 @@ uint32_t plSetImportsInfo(pl_file* plFile, pl_importsinfo* ImportsInfo)
  *
  *
  *=======================================================================*/
-
+uint32_t plCreateImportTable(pl_file* plFile, uint32_t MaxApiNameLenght)
+{
+	pl_pointers Ptrs;
+	IMAGE_DATA_DIRECTORY* datadir;
+	IMAGE_IMPORT_DESCRIPTOR* impdesc;
+	
+	if(plCheckPe(plFile) == PL_ERROR) { return PL_ERROR; }
+	
+	
+	return PL_SUCCESS;
+}
 
 /*=======================================================================
  *

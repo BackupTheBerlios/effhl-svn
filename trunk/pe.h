@@ -1,6 +1,7 @@
 /* Taken from winnt.h and modified for the needs of the lib */ 
 
-#include <stdint.h>
+#include "config.h"
+
 
 #define IMAGE_NUMBEROF_DIRECTORY_ENTRIES 16
 #define IMAGE_SIZEOF_SHORT_NAME 8

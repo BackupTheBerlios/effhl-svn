@@ -1,7 +1,7 @@
 [Project]
 FileName=PeLibrary.dev
 Name=PeLibrary
-UnitCount=4
+UnitCount=5
 Type=1
 Ver=1
 ObjFiles=
@@ -81,6 +81,16 @@ BuildCmd=
 FileName=pe.h
 CompileCpp=0
 Folder=
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit5]
+FileName=config.h
+CompileCpp=0
+Folder=PeLibrary
 Compile=1
 Link=1
 Priority=1000

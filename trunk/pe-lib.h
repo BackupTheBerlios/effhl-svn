@@ -18,7 +18,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdint.h>
+#include "config.h"
+
+
+
 
 #define LITTLE_ENDIAN
 
@@ -29,6 +32,8 @@
 #define PL_READ_WRITE 2
 
 #define MAX_FILENAME_LENGHT 300
+
+
 
 typedef struct file_struct
 {
@@ -131,4 +136,4 @@ uint32_t plGetExportsInfo(pl_file* plFile, pl_exportsinfo* ExportsInfo);
 uint32_t plSetExportsInfo(pl_file* plFile, pl_exportsinfo* ExportsInfo);
 uint32_t plGetImportsInfo(pl_file* plFile, pl_importsinfo* ImportsInfo);
 uint32_t plSetImportsInfo(pl_file* plFile, pl_importsinfo* ImportsInfo);
-
+uint16_t plLocateRVA(pl_file* plFile, uint32_t RVA);

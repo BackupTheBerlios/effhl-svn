@@ -18,7 +18,7 @@ LeftChar=1
 [Editor_1]
 Open=1
 Top=0
-CursorCol=81
+CursorCol=32
 CursorRow=66
 TopLine=16
 LeftChar=1
@@ -30,9 +30,9 @@ CursorRow=159
 TopLine=131
 LeftChar=1
 [Editor_4]
-Open=1
-Top=1
-CursorCol=9
-CursorRow=16
+Open=0
+Top=0
+CursorCol=1
+CursorRow=1
 TopLine=1
 LeftChar=1
